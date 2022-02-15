@@ -16,8 +16,15 @@ import java.net.Socket;
 
 public class Program {
     public static void main(String[] args) throws RpcException, IOException, InterruptedException {
-        NanoWebSocketClient ws = new NanoWebSocketClient(); // Defaults to localhost:7078
-        ws.connect(); // Connect to the endpoint
+        RpcQueryNode rpc = new RpcQueryNode();          // Using localhost:7076
+        RpcQueryNode rpc2 = RpcServiceProviders.nanex(); // Using nanex.cc public API
+
+        // Construct and execute the request, and obtain the response
+        ResponseBalance balance = rpc.processRequest(new RequestAccountBalance(
+                "nano_34qjpc8t1u6wnb584pc4iwsukwa8jhrobpx4oea5gbaitnqafm6qsgoacpiz"));
+
+// Handle the result object however you wish (eg. print the balance)
+        System.out.println("Account balance: " + balance.getTotal());
 
 
     }
